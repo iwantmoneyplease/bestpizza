@@ -14,15 +14,6 @@
     <input type="submit" value="Upload Image" name="posttype">
     </form>
 
-    <form action="" method="POST">
-        <input type="text" name="Time" value="<?php echo $row["Öppetider"];?>">
-        <input type="submit" value="Change Opening Times" name="posttype">
-    </form>
-
-    <form action="" method="POST">
-        <input type="text" name="E-mail" value="<?php echo $row["Kontakt"];?>">
-        <input type="submit" value="Change E-mail" name="posttype">
-    </form>
 
     <?php
     if($_POST){ //table functions, publish, destroy, update
@@ -61,23 +52,19 @@
             require("../admin/uploadimg.php");
         }
 
-        else if($_POST["posttype"] == "Change Opening Times"){
-            echo "updateTime";
-
+        else if($_POST["posttype"] == "Ändra Öppetider"){
             $sql = "UPDATE info SET content = ? WHERE _id = 2";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("s", $_POST["Time"]);
+            $stmt->bind_param("s", $_POST["Öppetider"]);
             $stmt->execute();
             $stmt->close();
             $conn->close();
         }
 
-        else if($_POST["posttype"] == "Change E-mail"){
-            echo "updateEmail";
-
+        else if($_POST["posttype"] == "Ändra Kontakt"){
             $sql = "UPDATE info SET content = ? WHERE _id = 3";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("s", $_POST["E-mail"] );
+            $stmt->bind_param("s", $_POST["Kontakt"] );
             $stmt->execute();
             $stmt->close();
             $conn->close();
@@ -85,6 +72,23 @@
     }
 ?>
 
+    <?php
+    include("../conn.php");
+
+    $sql = "SELECT * FROM info WHERE type != 'Image'";
+    $result = $conn->query($sql);
+    if($result->num_rows > 0){
+        while($row = $result->fetch_assoc()){
+            ?>
+            <form action="" method="POST">
+                <input type="text" name="<?php echo $row["type"]; ?>" value="<?php echo $row["content"];?>">
+                <input type="submit" value="Ändra <?php echo $row["type"]; ?>" name="posttype">
+            </form>
+        <?php
+        }
+    }
+    $conn->close();
+    ?>
     <form id="form" action="/add.php" method="POST">
         <input type="text" name="name" placeholder="name of pizza">
         <input type="text" name="type" placeholder="type of pizza">
