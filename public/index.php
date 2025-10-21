@@ -6,9 +6,9 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="login.php"><img src="/style/logo2.png"></a>
     <header>
         <h1>hej</h1>
-        <?php echo '<a href="add.php">CMS Page</a> <br />'; ?>
     <?php
     include("../conn.php");
     $sql = "SELECT content  FROM info WHERE type = 'Image'";
