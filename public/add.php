@@ -105,7 +105,7 @@
         while($row = $result->fetch_assoc()){ ?>
             <h3><?php echo $row["_id"]; ?></h3>
             <form action="" method="post">
-                <input type="text" name="id" value="<?php echo $row["_id"];?>" hidden>
+                <input type="text" name="id" value="<?php echo $row["id"];?>" hidden>
                 <input type="text" name="name" value="<?php echo $row["name"]; ?>">
                 <input type="text" name="type" value="<?php echo $row["type"]; ?>">
                 <input type="text" name="cost" value="<?php echo $row["cost"]; ?>">
